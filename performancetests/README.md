@@ -27,7 +27,7 @@ You can also use categories to initialize the tests:
 $ nosetests "--eval-attr=short and (not nl)" performancetests/tests
 ```
 ### Console Script
-These tests can also be invoked using the following console script command:
+These tests can also be invoked from any directory using the following console script command:
 ```
 $ pyomo-performance [-h] [--version] [-c CATEGORY] [-l LOCATION] [-v]
 ```
