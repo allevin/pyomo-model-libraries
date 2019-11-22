@@ -8,6 +8,13 @@ This repository contains the reworked benchmark tests (aka, performance tests) t
 
 Your local copy of `Pyomo/pyomo-model-libraries` repository should be parallel to the `Pyomo/pyomo` repository.
 
+## Setup
+To initialize the included console scripts, run:
+```
+$ python setup.py develop
+```
+These tests assume that `pyomo` has been setup using the same command. The tests can still be run if `pyomo` was installed using different means - output files, however, will be missing useful Github commit information.
+
 ## Running the Tests
 
 ### Manually

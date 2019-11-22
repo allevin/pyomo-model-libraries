@@ -12,7 +12,6 @@ import os
 import sys
 import argparse
 import pyomo
-from performancetests.support import testglobals
  
 
 def get_sha(): # Retrieves the SHA for the pyomo directory 
