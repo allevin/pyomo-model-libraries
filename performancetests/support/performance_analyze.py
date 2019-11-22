@@ -84,6 +84,10 @@ def analyze_csv(files):
             for h,v in zip(headers2,row):
                 data2[h].append(v)
 
+    # Exit if the CSV files' headers (aka, the elements to be compared) don't match
+    if headers1 != headers2:
+        sys.exit('ERROR: Data files do not have matching categories.')
+        
     # Initialize Analysis dictionary
     results = {}
     
