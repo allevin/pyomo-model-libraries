@@ -91,3 +91,33 @@ For the remaining elements, the relative percentage difference is calculated, wi
 (v2-v1) / ((v1+v2)/2) * 100
 ```
 If `v1` and `v2` are both 0, the result will be listed as `Undefined`.
+
+The output will look like this:
+```
+************* Analysis Results *************
+timestamp :
+       [['File 1: 2019-11-22 13:37:44', 'File 2: 2019-11-22 13:37:49']]
+python_version :
+       ['3.7.4']
+commit_info :
+       ['84f2f728b']
+totalruntime :
+       ['-9.182861518736637 %']
+construct :
+       ['-7.951586703904198 %']
+write_problem :
+       ['-10.162846371077565 %']
+read_logfile :
+       ['Undefined']
+read_solution :
+       ['Undefined']
+solver :
+       ['Undefined']
+presolve :
+       ['Undefined']
+postsolve :
+       ['Undefined']
+transformations :
+       ['Undefined']
+**********************************************
+```
