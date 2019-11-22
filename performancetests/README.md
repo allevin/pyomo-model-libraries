@@ -6,16 +6,12 @@ This repository contains the reworked benchmark tests (aka, performance tests) t
 
 ## Placement of Repository
 
-In your local copy of the `Pyomo/pyomo-model-libraries` repository, clone `pyomo-performancetests` as below:
-```
-$ cd pyomo-model-libraries
-$ git clone git@gitlab.sandia.gov:allevin/pyomo-performancetests.git 
-```
+Your local copy of `Pyomo/pyomo-model-libraries` repository should be parallel to the `Pyomo/pyomo` repository.
 
 ## Running the Tests
 
 ### Manually
-These tests can be invoked using the following command from the `pyomo-performancetests` directory:
+These tests can be invoked using the following command from the `pyomo-model-libraries` directory:
 ```
 $ nosetests performancetests/tests/<subset>
 ```
@@ -60,3 +56,19 @@ Pyomo Model bilinear1_100_100 (gms) - Total Runtime = 0.470000
 ```
 
 Output files in `.csv` format will be created in the `performancetests/output/runtime` directory for each successfully run test. Rundata as `.out` files will be created in the `performancetests/output/rundata` directory.
+
+## Comparing Output Files
+There is a console script that will compare the data within two performance test `csv` files.
+This script can be invoked using the following command:
+```
+$ pyomo-analyze [-h] [-f FILE1] [-f FILE2]
+```
+The two files can either be listed by two calls to the `-f` option or a single call in a comma-separated list:
+```
+# These commands are the same:
+
+$ pyomo-analyze -f path/to/file1 -f path/to/file2
+$ pyomo-analyze -f path/to/file1,path/to/file2
+```
+
+The results will be printed to the console as well as in `.csv` format in the `performancetests/output/analysisdata` directory.
