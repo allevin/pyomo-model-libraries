@@ -62,8 +62,8 @@ setup(name='Pyomo Performance Tests',
   entry_points="""
     [console_scripts]
     pyomo-performance=performancetests.support.performance_main:main_performance_script
-    pyomo-plot=performancetests.support.performance_plot:main_plot_script
     pyomo-analyze=performancetests.support.performance_analyze:main_analysis_script
   """
+#      pyomo-plot=performancetests.support.performance_plot:main_plot_script ##TOBEADDED
     )
     
