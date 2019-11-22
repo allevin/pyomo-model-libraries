@@ -4,3 +4,12 @@
 *.pyc
 *.pyo
 *.spy
+*.csv
+*.out
+*.bar
+*.nl
+*.lp
+*.gms
+*.DS_Store
+build
+dist
