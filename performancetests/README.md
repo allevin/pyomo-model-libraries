@@ -64,7 +64,9 @@ Pyomo Model bilinear1_100_100 (gms) - Total Runtime = 0.470000
 Output files in `.csv` format will be created in the `performancetests/output/runtime` directory for each successfully run test. Rundata as `.out` files will be created in the `performancetests/output/rundata` directory.
 
 ## Comparing Output Files
-There is a console script that will compare the data within two performance test `csv` files.
+
+### Console Script
+This package includes a console script that will compare the data within two performance test `csv` files.
 This script can be invoked using the following command:
 ```
 $ pyomo-analyze [-h] [-f FILE1] [-f FILE2]
@@ -78,3 +80,14 @@ $ pyomo-analyze -f path/to/file1,path/to/file2
 ```
 
 The results will be printed to the console as well as in `.csv` format in the `performancetests/output/analysisdata` directory.
+
+### Difference Calculation
+The results of the analysis routine compares the same element of each file, i.e., timestamp to timestamp, solver to solver, etc.
+
+For `timestamp`, `python_version`, and `commit_info`, differences will be called out explicitly, if they exist.
+
+For the remaining elements, the relative percentage difference is calculated, with `v1` as the FILE1 value and `v2` as the FILE2 value, by:
+```
+(v2-v1) / ((v1+v2)/2) * 100
+```
+If `v1` and `v2` are both 0, the result will be listed as `Undefined`.

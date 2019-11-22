@@ -14,8 +14,6 @@ import errno
 import datetime
 import csv
 import argparse
-import json
-import pprint
 
 def main_analysis_script(args=None):
     if args is None:
@@ -53,7 +51,6 @@ def main_analysis_script(args=None):
         sys.exit('ERROR: Files cannot be found. Please check paths.')
     
     
-
 
 def analyze_csv(files):
     '''
@@ -94,31 +91,12 @@ def analyze_csv(files):
     for h in headers1:
         results[h] = []
         
-    # Print the timestamps
-    time1 = data1['timestamp']
-    time1[0] = 'File 1: ' + time1[0]
-    time2 = data2['timestamp']
-    time2[0] = 'File 2: ' + time2[0]
-    results['timestamp'].append(time1[0])
-    results['timestamp'].append(time2[0])
+    # List the first three headers
+    startheaders = headers1[:3]
     
-    # Compare the Python versions
-    python1 = data1['python_version']
-    python2 = data2['python_version']
-    if python1 == python2:
-        results['python_version'].append(python1[0])
-    else:
-        results['python_version'].append(python1[0])
-        results['python_version'].append(python2[0])
-    
-    # Compare the Commit info
-    sha1 = data1['commit_info']
-    sha2 = data2['commit_info']
-    if sha1 == sha2:
-        results['commit_info'].append(sha1[0])
-    else:
-        results['commit_info'].append(sha1[0])
-        results['commit_info'].append(sha2[0])
+    # Print the timestamp(s), python_version(s), commit_info
+    for h in startheaders:
+        results[h].append(print_string(data1, data2, h))
      
     # List of the rest of the headers
     shortheaders = headers1[3:]
@@ -135,6 +113,23 @@ def analyze_csv(files):
         
     filepath = _set_CSVFilePath()
     _csv_writer(filepath, results)
+    
+   
+########
+# This block contains the comparison functions
+########
+    
+def print_string(data1, data2, item):
+    v1 = data1[item]
+    v2 = data2[item]
+    if v1 == v2:
+        result = v1[0]
+        return result
+    else:
+        v1[0] = 'File 1: ' + v1[0]
+        v2[0] = 'File 2: ' + v2[0]
+        result = [v1[0], v2[0]]
+        return result
     
     
 def get_rel_diff(data1, data2, item):
