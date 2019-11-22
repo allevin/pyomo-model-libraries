@@ -46,8 +46,7 @@ The optional arguments are as follows:
 ```
 By default, the console script will run all tests in the `performancetests/tests` directory, but this can be filtered using categories like `short`, `long`, `nl`, `'not bar'`, etc.
 
-## Output
-
+### Output
 Results from the test will print to the terminal in this fashion:
 ```
 Performance Testing Report:
