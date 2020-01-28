@@ -22,4 +22,3 @@ def accessTestGlobals():
     packageskippedreportlist = []
     packagetotalruntime = 0
     pyomo_sha = "Undefined"
-

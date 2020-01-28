@@ -17,10 +17,15 @@ import errno
 import pyomo
 import inspect
 import datetime
+import importlib
 import pyutilib.subprocess
 import pyutilib.th as unittest
+import pyutilib.misc.timing as timing
+import pyutilib.misc.import_file as import_file
 from performancetests.support import testglobals
 from multiprocessing import Process
+
+from pyomo.core.base.PyomoModel import *
 
 ################################################################################
 
@@ -45,7 +50,7 @@ class PerformanceTestCase(unittest.TestCase):
         self._skippingtest = False
         self._skippingreason = ""
         self._modelname = ''
-        self._num = '1'
+        self._testNum = '1'
         self._rundir = os.getcwd()
         self._modeldir = os.getcwd()
         self._outfilepath = os.getcwd()
@@ -56,9 +61,97 @@ class PerformanceTestCase(unittest.TestCase):
         self._runtimeinfo = {}
         self._runtestcmd = ""
         self._timestamp = ""
+        self._createdTestModelInstance = None
+
+        self._testmodelfilepath = ""
+        self._datafilepath = ""
+        self._timer = None
 
         self.setTestVerbose(True)
         self.setTestTimeout(60)
+
+### #################################### NEW CODE ##############################
+    def _initTestingInfo(self):
+        # Start Garbage Collection
+        gc.collect()
+
+        self._timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Figure out the path to the python test model to run
+        self._testmodelfilepath = '%s/%s.py' % (self._modeldir, self._modelname)
+        if not os.path.isfile(self._testmodelfilepath):
+            sys.exit(str("TEST-ERROR: Cannot find path to model file at {0}").format(self._testmodelfilepath))
+
+        # Figure out the path to the data file (if it is defined)
+        if self._datafilename != "":
+            self._datafilepath = '%s/%s' % (self._modeldir, self._datafilename)
+            if not os.path.isfile(self._datafilepath):
+                sys.exit(str("TEST-ERROR: Cannot find path to data file at {0}").format(self._datafilepath))
+        else:
+            self._datafilepath = ""
+
+        # Initialize the timer
+        self._timer = timing.TicTocTimer()
+        self._timer.tic("")
+
+###
+
+    def CreateModelInstance(self):
+        self._initTestingInfo()
+
+        # Make sure user is not creating another instance
+        self.assertEquals(self._createdTestModelInstance, None, msg = 'Cannot Create Model Instance - A Model has previously been created for this test')
+
+        # Using pyutilib to import the test model file
+        loaded_module = import_file(self._testmodelfilepath)
+
+        if self._verbose:
+            noselog("\nModel Create %s(%s)...\n" %(self._modelname, self._testNum))
+
+        # Now create the model
+        model = loaded_module.pyomo_create_model()
+
+        # Now instantiate the model if it is abstract
+        if isinstance(model, AbstractModel):
+            noselog("AARON: MODEL IS ABSTRACT - CREATING INSTANCE\n")
+            model = model.create_instance(self._datafilepath)
+        else:
+            noselog("AARON: MODEL IS CONCRETE - INSTANCE ALREADY CREATED\n")
+
+        self._createdTestModelInstance = model
+        return model
+
+###
+
+    def WriteModelInstance(self, model, format):
+        self._checkParamType("model", model, ConcreteModel)
+        self._checkParamType("format", format, str)
+        self._format = format
+
+        self._set_OutputFilePath()
+        self._set_CSVFilePath()
+        self._set_ModelDataFilePath()
+
+        self.assertNotEqual(self._createdTestModelInstance, None, msg = 'Cannot Write Model - A Model has not been instantiated for this test')
+
+        if self._verbose:
+            noselog("Writing Model %s...\n" % self._format)
+
+        model.write("%s" % (self._modeldatafilepath))
+
+###
+
+    def capture_performance_result_time(self, performance_result_name):
+        self._checkParamType("performance_result_name", performance_result_name, str)
+
+        deltatime = self._timer.toc("")
+        noselog("%s Time = %s\n" % (performance_result_name, deltatime))
+
+
+
+### #################################### NEW CODE ##############################
+
+
 
 ###
 
@@ -83,7 +176,7 @@ class PerformanceTestCase(unittest.TestCase):
         self._checkParamType("reason", reason, str)
         self._skippingtest = True
         self._skippingreason = reason
-        reportstring = "Model %s_%s (%s) - Test Skipped: %s" % (self._modelname, self._num, self._format, self._skippingreason) + "\n"
+        reportstring = "Model %s_%s (%s) - Test Skipped: %s" % (self._modelname, self._testNum, self._format, self._skippingreason) + "\n"
         self._appendSkipReportToFinalTestReport(reportstring)
         # NOTE: The skipTest MUST come at the end of this method
         self.skipTest(reason)
@@ -122,7 +215,7 @@ class PerformanceTestCase(unittest.TestCase):
 
     def setTestNum(self, num):
         self._checkParamType("num", num, str)
-        self._num = num
+        self._testNum = num
 
     def getTopTestingDir(self):
         return self._performancetestsdir
@@ -219,14 +312,14 @@ class PerformanceTestCase(unittest.TestCase):
             totalruntime = self._runtimeinfo['totalruntime']
 
             # Delete the unwanted output files
-            self._rm_file(self._modeldatafilepath)
-            self._rm_file(self._outfilepath)
+#            self._rm_file(self._modeldatafilepath)
+#            self._rm_file(self._outfilepath)
 
             # Build a report string
             typestr = "Script" if runasscript else "Model "
             reportstring = "%s %s_%s (%s) - Total Runtime = %f" % (typestr,
                                                                    self._modelname,
-                                                                   self._num,
+                                                                   self._testNum,
                                                                    self._format,
                                                                    totalruntime) + "\n"
             self._appendRunReportToFinalTestReport(reportstring)
@@ -357,21 +450,21 @@ class PerformanceTestCase(unittest.TestCase):
         self._mkdir_p(rundata_outputdir)
         self._outfilepath = '%spyomo_%s_%s_%s.out' % (rundata_outputdir,
                                                       self._modelname,
-                                                      self._num, self._format)
+                                                      self._testNum, self._format)
 
     def _set_CSVFilePath(self):
         runtime_outputdir = '%s/output/runtime/' % (self._performancetestsdir)
         self._mkdir_p(runtime_outputdir)
         self._csvfilepath = '%spyomo_%s_%s_%s.csv' % (runtime_outputdir,
                                                       self._modelname,
-                                                      self._num, self._format)
+                                                      self._testNum, self._format)
 
     def _set_ModelDataFilePath(self):
         modeldata_outputdir = '%s/output/rundata/' % (self._performancetestsdir)
         self._mkdir_p(modeldata_outputdir)
         self._modeldatafilepath = '%spyomo_%s_%s.%s' % (modeldata_outputdir,
                                                         self._modelname,
-                                                        self._num, self._format)
+                                                        self._testNum, self._format)
 
 #####
 
