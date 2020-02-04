@@ -8,10 +8,9 @@
 #  This software is distributed under the 3-clause BSD License.
 #  ___________________________________________________________________________
 
-
 from pyomo.environ import *
 
-def pyomo_create_model(options=None, model_options=None):
+def create_model(options=None, model_options=None):
     import random
 
     random.seed(1000)
@@ -51,3 +50,6 @@ def pyomo_create_model(options=None, model_options=None):
     model.num_facilities = Constraint(rule=rule)
 
     return model
+
+def pyomo_create_model(options=None, model_options=None, size=4):
+    return create_model(size)

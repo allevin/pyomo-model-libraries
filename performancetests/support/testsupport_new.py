@@ -58,9 +58,9 @@ class PerformanceTestCase(unittest.TestCase):
 
         self._skippingtest = False
         self._skippingreason = ''
-        self._modelname = ''
+        self._modelname = 'Undefined_Model'
         self._testsize = 1
-        self._modeldir = ''
+        self._modeldir = 'Undefined_Dir'
         self._csvfilepath = ''
         self._modelwriteoutputfilepath = ''
         self._datafilename = ''

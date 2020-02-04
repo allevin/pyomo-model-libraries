@@ -12,81 +12,49 @@
 # Performance Tests for pmedian
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
-#@unittest.category('performance', 'short')
-#class Test_pmedian1_4(PerformanceTestCase):
-#
-#    def setUp(self):
-#        self.setTestModelDir('pmedian_models')
-#        self.setTestModelName('pmedian1')
-#        self.setTestNum('4')
-#        self.setTestDataFileName("pmedian.test4.dat")
-#
-#        self.setTestTimeout(60)
-#
-#    def tearDown(self):
-#        pass
-#
-#    @unittest.category('lp')
-#    def test_pmedian1_4_lp(self):
-#        self.runPyomoModelTest('lp')
-#
-#    @unittest.category('nl')
-#    def test_pmedian1_4_nl(self):
-#        self.runPyomoModelTest('nl')
-#
-#    @unittest.category('bar')
-#    def test_pmedian1_4_bar(self):
-#        self.runPyomoModelTest('bar')
-#
-#    @unittest.category('gms')
-#    def test_pmedian1_4_gms(self):
-#        self.runPyomoModelTest('gms')
+@unittest.category('performance', 'short')
+class Test_pmedian1_4(PerformanceTestCase):
 
-###
+    def setUp(self):
+        self.setTestModelDir('pmedian_models')
+        self.setTestModelName('model_pmedian1')
+        self.setTestSize(8)
+        self.setTestDataFileName("pmedian.test8.dat")
 
-#@unittest.category('performance', 'short')
-#class Test_pmedian2_4(PerformanceTestCase):
-#
-#    def setUp(self):
-#        self.setTestModelDir('pmedian_models')
-#        self.setTestModelName('pmedian2')
-#        self.setTestNum('4')
-#        self.setTestDataFileName("pmedian.test4.dat")
-#
-#        self.setTestTimeout(60)
-#
-#    def tearDown(self):
-#        pass
-#
-#    @unittest.category('lp')
-#    def test_pmedian2_4_lp(self):
-#        self.runPyomoModelTest('lp')
-#
-#    @unittest.category('nl')
-#    def test_pmedian2_4_nl(self):
-#        self.runPyomoModelTest('nl')
-#
-#    @unittest.category('bar')
-#    def test_pmedian2_4_bar(self):
-#        self.runPyomoModelTest('bar')
-#
-#    @unittest.category('gms')
-#    def test_pmedian2_4_gms(self):
-#        self.runPyomoModelTest('gms')
+    def tearDown(self):
+        self.writeTestTimingResults()
+
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_pmedian1_4(self):
+
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
+
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
@@ -95,32 +63,31 @@ class Test_pmedian2_4(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('pmedian_models')
-        self.setTestModelName('pmedian2')
-#        self.setTestNum('4')
-#        self.setTestDataFileName("pmedian.test4.dat")
-        self.setTestNum('4')
-        self.setTestDataFileName("pmedian.test8.dat")
-
-        self.setTestTimeout(60)
+        self.setTestModelName('model_pmedian2')
+        self.setTestSize(4)
+        self.setTestDataFileName("pmedian.test4.dat")
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('bar')
-    def test_pmedian2_4_bar_NEW(self):
-        self.timingTest_WriteModelInstance('bar')
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_pmedian1_4(self):
 
-    @unittest.category('gms')
-    def test_pmedian2_4_gms_NEW(self):
-        self.timingTest_WriteModelInstance('gms')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('nl')
-    def test_pmedian2_4_nl_NEW(self):
-        self.timingTest_WriteModelInstance('nl')
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-    @unittest.category('lp')
-    def test_pmedian2_4_lp_NEW(self):
-        self.timingTest_WriteModelInstance('lp')
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
+
 
 ###
 

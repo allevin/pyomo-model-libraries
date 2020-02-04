@@ -27,33 +27,33 @@ def teardown_module():
 ###
 
 #@unittest.category('performance', 'long')
-#class Test_pmedian1_8(PerformanceTestCase):
-#
-#    def setUp(self):
-#        self.setTestModelDir('pmedian_models')
-#        self.setTestModelName('pmedian1')
-#        self.setTestNum('8')
-#        self.setTestDataFileName("pmedian.test8.dat")
-#        self.setTestTimeout(60)
-#
-#    def tearDown(self):
-#        pass
-#
-#    @unittest.category('lp')
-#    def test_pmedian1_8_lp(self):
-#        self.runPyomoModelTest('lp')
-#
-#    @unittest.category('nl')
-#    def test_pmedian1_8_nl(self):
-#        self.runPyomoModelTest('nl')
-#
-#    @unittest.category('bar')
-#    def test_pmedian1_8_bar(self):
-#        self.runPyomoModelTest('bar')
-#
-#    @unittest.category('gms')
-#    def test_pmedian1_8_gms(self):
-#        self.runPyomoModelTest('gms')
+class Test_pmedian1_8(PerformanceTestCase):
+
+    def setUp(self):
+        self.setTestModelDir('pmedian_models')
+        self.setTestModelName('pmedian1')
+        self.setTestNum('8')
+        self.setTestDataFileName("pmedian.test8.dat")
+        self.setTestTimeout(60)
+
+    def tearDown(self):
+        pass
+
+    @unittest.category('lp')
+    def test_pmedian1_8_lp(self):
+        self.runPyomoModelTest('lp')
+
+    @unittest.category('nl')
+    def test_pmedian1_8_nl(self):
+        self.runPyomoModelTest('nl')
+
+    @unittest.category('bar')
+    def test_pmedian1_8_bar(self):
+        self.runPyomoModelTest('bar')
+
+    @unittest.category('gms')
+    def test_pmedian1_8_gms(self):
+        self.runPyomoModelTest('gms')
 
 ###
 

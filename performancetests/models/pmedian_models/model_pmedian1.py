@@ -8,13 +8,18 @@
 #  This software is distributed under the 3-clause BSD License.
 #  ___________________________________________________________________________
 
-
 from pyomo.environ import *
+import sys
 
-def pyomo_create_model(options=None, model_options=None):
+#def create_model(options=None, model_options=None, size=4):
+def pyomo_create_model(options=None, model_options=None, size=4):
+    sys.stderr.write("AARON: options = {0}\n".format(options))
+    sys.stderr.write("AARON: model_options = {0}\n".format(model_options))
+    sys.stderr.write("AARON: size = {0}\n".format(size))
+
     import random
 
-    random.seedx(1000)
+    random.seed(1000)
 
     model = AbstractModel()
 
@@ -51,3 +56,7 @@ def pyomo_create_model(options=None, model_options=None):
     model.num_facilities = Constraint(rule=rule)
 
     return model
+
+
+#def pyomo_create_model(options=None, model_options=None, size=4):
+#    return create_model(size)
