@@ -19,28 +19,28 @@ from performancetests.support.testsupport import *
 def setup_package():
     testglobals.accessTestGlobals()
     testglobals.NOSE_VERBOSITY = get_package_nosetest_verbosity()
-    noselog_debug("NOSE_VERBOSENESS = %s\n" % str(testglobals.NOSE_VERBOSITY))
+    noselog_debug('NOSE_VERBOSENESS = %s\n' % str(testglobals.NOSE_VERBOSITY))
 
-    noselog_debug("SETUP NOSE PACKAGE\n")
+    noselog_debug('SETUP NOSE PACKAGE\n')
     testglobals.packagerunreportlist = []
     testglobals.packageskippedreportlist = []
     testglobals.packagetotalruntime = 0
     testglobals.pyomo_sha = _get_pyomo_sha()
-    noselog_debug("PYOMO SHA = %s\n\n" % str(testglobals.pyomo_sha))
+    noselog_debug('PYOMO SHA = %s\n\n' % str(testglobals.pyomo_sha))
 
 def teardown_package():
-    noselog_debug("TEARDOWN NOSE PACKAGE\n")
+    noselog_debug('TEARDOWN NOSE PACKAGE\n')
     if is_nosetest_output_verbose() or is_nosetest_output_normal():
-        noselog("\n", OVERRIDE_NORMAL_OUTPUT)
+        noselog('\n', OVERRIDE_NORMAL_OUTPUT)
         if len(testglobals.packageskippedreportlist) > 0:
-            noselog("Skipped Tests:\n", OVERRIDE_NORMAL_OUTPUT)
+            noselog('Skipped Tests:\n', OVERRIDE_NORMAL_OUTPUT)
             noselog(testglobals.packageskippedreportlist)
 
-        noselog("\nPerformance Testing Report:\n", OVERRIDE_NORMAL_OUTPUT)
+        noselog('\nPerformance Testing Report:\n', OVERRIDE_NORMAL_OUTPUT)
         noselog(testglobals.packagerunreportlist, OVERRIDE_NORMAL_OUTPUT)
 
-        report = str(("Total Runtime for all tests ") +
-                      ("= %f seconds\n") % testglobals.packagetotalruntime)
+        report = str(('\nTotal Runtime for all tests ') +
+                      ('= %f seconds\n') % testglobals.packagetotalruntime)
         noselog(report, OVERRIDE_NORMAL_OUTPUT)
     pass
 
@@ -79,9 +79,9 @@ def _get_package_nosetest_texttestrunner_class():
     frame = inspect.currentframe()
     while frame:
         self = frame.f_locals.get('self')
-        #noselog_debug(str("frame = {0}\n").format(self))
+        #noselog_debug(str('frame = {0}\n').format(self))
         if isinstance(self, nose.core.TextTestRunner):
-            #noselog_debug(str("TextTestRunner attr = {0}\n").format(dir(self)))
+            #noselog_debug(str('TextTestRunner attr = {0}\n').format(dir(self)))
             return self
         frame = frame.f_back
     return None

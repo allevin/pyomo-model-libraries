@@ -12,48 +12,49 @@
 # Performance Tests for diag
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
 @unittest.category('performance', 'short')
 class Test_diag1_100(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('misc_models')
-        self.setTestModelName('diag1_100')
-        self.setTestNum('100')
+        self.setTestModelName('model_diag1')
+        self.setTestSize(100)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('lp')
-    def test_diag1_100_lp(self):
-        self.runPyomoModelTest('lp')
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_diag1_100(self):
 
-    @unittest.category('nl')
-    def test_diag1_100_nl(self):
-        self.runPyomoModelTest('nl')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('bar')
-    def test_diag1_100_bar(self):
-        self.runPyomoModelTest('bar')
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-    @unittest.category('gms')
-    def test_diag1_100_gms(self):
-        self.runPyomoModelTest('gms')
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
@@ -62,29 +63,30 @@ class Test_diag2_100(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('misc_models')
-        self.setTestModelName('diag2_100')
-        self.setTestNum('100')
+        self.setTestModelName('model_diag2')
+        self.setTestSize(100)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('lp')
-    def test_diag2_100_lp(self):
-        self.runPyomoModelTest('lp')
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_diag2_100(self):
 
-    @unittest.category('nl')
-    def test_diag2_100_nl(self):
-        self.runPyomoModelTest('nl')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('bar')
-    def test_diag2_100_bar(self):
-        self.runPyomoModelTest('bar')
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-    @unittest.category('gms')
-    def test_diag2_100_gms(self):
-        self.runPyomoModelTest('gms')
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
