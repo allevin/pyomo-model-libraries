@@ -53,38 +53,38 @@ class Test_diag1_100000(PerformanceTestCase):
 
     @unittest.category('gms')
     def test_diag1_100000_gms(self):
-        self.runPyomoModelTest('gms')
+        self.runPyomoModelTest('zzms')
 
 ###
 
-@unittest.category('performance', 'long')
-class Test_diag2_100000(PerformanceTestCase):
-
-    def setUp(self):
-        self.setTestModelDir('misc_models')
-        self.setTestModelName('diag2_100000')
-        self.setTestNum('100000')
-        self.setTestDataFileName("")
-        self.setTestTimeout(60)
-
-    def tearDown(self):
-        pass
-
-    @unittest.category('lp')
-    def test_diag2_100000_lp(self):
-        self.runPyomoModelTest('lp')
-
-    @unittest.category('nl')
-    def test_diag2_100000_nl(self):
-        self.runPyomoModelTest('nl')
-
-    @unittest.category('bar')
-    def test_diag2_100000_bar(self):
-        self.runPyomoModelTest('bar')
-
-    @unittest.category('gms')
-    def test_diag2_100000_gms(self):
-        self.runPyomoModelTest('gms')
+#@unittest.category('performance', 'long')
+#class Test_diag2_100000(PerformanceTestCase):
+#
+#    def setUp(self):
+#        self.setTestModelDir('misc_models')
+#        self.setTestModelName('diag2_100000')
+#        self.setTestNum('100000')
+#        self.setTestDataFileName("")
+#        self.setTestTimeout(60)
+#
+#    def tearDown(self):
+#        pass
+#
+#    @unittest.category('lp')
+#    def test_diag2_100000_lp(self):
+#        self.runPyomoModelTest('lp')
+#
+#    @unittest.category('nl')
+#    def test_diag2_100000_nl(self):
+#        self.runPyomoModelTest('nl')
+#
+#    @unittest.category('bar')
+#    def test_diag2_100000_bar(self):
+#        self.runPyomoModelTest('bar')
+#
+#    @unittest.category('gms')
+#    def test_diag2_100000_gms(self):
+#        self.runPyomoModelTest('gms')
 
 ###
 

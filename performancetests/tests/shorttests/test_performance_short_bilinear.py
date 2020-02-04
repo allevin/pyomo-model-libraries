@@ -12,16 +12,16 @@
 # Performance Tests for bilinear
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
 ###
@@ -37,25 +37,24 @@ class Test_bilinear1_100(PerformanceTestCase):
         self.setTestDataFileName("")
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
     def test_bilinear1_100_bar(self):
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-        m = self.CreateModelInstance()
-        self.capture_performance_result_time("Model Declaration")
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-        self.WriteModelInstance(m, 'bar')
-        self.capture_performance_result_time("Write bar")
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
 
-        self.WriteModelInstance(m, 'gms')
-        self.capture_performance_result_time("Write gms")
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
 
-        self.WriteModelInstance(m, 'nl')
-        self.capture_performance_result_time("Write nl")
-
-        self.WriteModelInstance(m, 'lp')
-        self.capture_performance_result_time("Write lp")
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
@@ -69,25 +68,25 @@ class Test_bilinear2_100(PerformanceTestCase):
         self.setTestDataFileName("")
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
     def test_bilinear2_100_bar(self):
 
-        m = self.CreateModelInstance()
-        self.capture_performance_result_time("Model Declaration")
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-        self.WriteModelInstance(m, 'bar')
-        self.capture_performance_result_time("Write bar")
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-        self.WriteModelInstance(m, 'gms')
-        self.capture_performance_result_time("Write gms")
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
 
-        self.WriteModelInstance(m, 'nl')
-        self.capture_performance_result_time("Write nl")
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
 
-        self.WriteModelInstance(m, 'lp')
-        self.capture_performance_result_time("Write lp")
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 

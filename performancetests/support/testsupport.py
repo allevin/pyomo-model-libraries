@@ -27,6 +27,16 @@ from multiprocessing import Process
 
 from pyomo.core.base.PyomoModel import *
 
+# Nosetests when run sets the verbosity as defined here
+# nosetests -q <test>             : NOSE_VERBOSITY = 0  (quiet)
+# nosetests    <test>             : NOSE_VERBOSITY = 1  (normal)
+# nosetests -v <test>             : NOSE_VERBOSITY = 2  (verbose)
+# nosetests --verbosity=xx <test> : NOSE_VERBOSITY = xx (very verbose if xx > 2)
+NOSE_OUTPUT_QUIET   = 0
+NOSE_OUTPUT_NORMAL  = 1
+NOSE_OUTPUT_VERBOSE = 2
+OVERRIDE_NORMAL_OUTPUT = True
+
 ################################################################################
 
 class PerformanceTestCase(unittest.TestCase):
@@ -42,7 +52,8 @@ class PerformanceTestCase(unittest.TestCase):
         thisdir = os.path.dirname(__file__)
         self._performancetestsdir = os.path.abspath(os.path.join(thisdir, os.pardir))
         if os.path.basename(self._performancetestsdir) != "performancetests":
-            exitstr = str("TEST-ERROR: Cannot Find Main performance tests directory named 'performancetests' in path %s") % thisdir
+            exitstr = str(("TEST-ERROR: Cannot Find Main performance tests ") +
+                          ("directory named 'performancetests' in path %s") % thisdir)
             sys.exit(exitstr)
 
         self._verbose = True
@@ -65,96 +76,16 @@ class PerformanceTestCase(unittest.TestCase):
 
         self._testmodelfilepath = ""
         self._datafilepath = ""
-        self._timer = None
+        self._timer = timing.TicTocTimer()
 
         self.setTestVerbose(True)
         self.setTestTimeout(60)
 
-### #################################### NEW CODE ##############################
-    def _initTestingInfo(self):
-        # Start Garbage Collection
-        gc.collect()
 
-        self._timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+################################################################################
+# TOP LEVEL FUNCTIONS CALLED BY THE TESTS
 
-        # Figure out the path to the python test model to run
-        self._testmodelfilepath = '%s/%s.py' % (self._modeldir, self._modelname)
-        if not os.path.isfile(self._testmodelfilepath):
-            sys.exit(str("TEST-ERROR: Cannot find path to model file at {0}").format(self._testmodelfilepath))
-
-        # Figure out the path to the data file (if it is defined)
-        if self._datafilename != "":
-            self._datafilepath = '%s/%s' % (self._modeldir, self._datafilename)
-            if not os.path.isfile(self._datafilepath):
-                sys.exit(str("TEST-ERROR: Cannot find path to data file at {0}").format(self._datafilepath))
-        else:
-            self._datafilepath = ""
-
-        # Initialize the timer
-        self._timer = timing.TicTocTimer()
-        self._timer.tic("")
-
-###
-
-    def CreateModelInstance(self):
-        self._initTestingInfo()
-
-        # Make sure user is not creating another instance
-        self.assertEquals(self._createdTestModelInstance, None, msg = 'Cannot Create Model Instance - A Model has previously been created for this test')
-
-        # Using pyutilib to import the test model file
-        loaded_module = import_file(self._testmodelfilepath)
-
-        if self._verbose:
-            noselog("\nModel Create %s(%s)...\n" %(self._modelname, self._testNum))
-
-        # Now create the model
-        model = loaded_module.pyomo_create_model()
-
-        # Now instantiate the model if it is abstract
-        if isinstance(model, AbstractModel):
-            noselog("AARON: MODEL IS ABSTRACT - CREATING INSTANCE\n")
-            model = model.create_instance(self._datafilepath)
-        else:
-            noselog("AARON: MODEL IS CONCRETE - INSTANCE ALREADY CREATED\n")
-
-        self._createdTestModelInstance = model
-        return model
-
-###
-
-    def WriteModelInstance(self, model, format):
-        self._checkParamType("model", model, ConcreteModel)
-        self._checkParamType("format", format, str)
-        self._format = format
-
-        self._set_OutputFilePath()
-        self._set_CSVFilePath()
-        self._set_ModelDataFilePath()
-
-        self.assertNotEqual(self._createdTestModelInstance, None, msg = 'Cannot Write Model - A Model has not been instantiated for this test')
-
-        if self._verbose:
-            noselog("Writing Model %s...\n" % self._format)
-
-        model.write("%s" % (self._modeldatafilepath))
-
-###
-
-    def capture_performance_result_time(self, performance_result_name):
-        self._checkParamType("performance_result_name", performance_result_name, str)
-
-        deltatime = self._timer.toc("")
-        noselog("%s Time = %s\n" % (performance_result_name, deltatime))
-
-
-
-### #################################### NEW CODE ##############################
-
-
-
-###
-
+    # TODO: REMOVE ME
     # Perform a Performance Test run of a Model via Pyomo
     def runPyomoModelTest(self, format, scriptmode=False):
         self._checkParamType("format", format, str)
@@ -171,6 +102,7 @@ class PerformanceTestCase(unittest.TestCase):
 
 ###
 
+    # TODO: REMOVE ME - NOT SURE ABOUT THIS
     # Skip the Test, This provides some feedback to the user that the test was skipped
     def skipThisTest(self, reason):
         self._checkParamType("reason", reason, str)
@@ -183,6 +115,7 @@ class PerformanceTestCase(unittest.TestCase):
 
 ###
 
+    # TODO: REMOVE ME
     def setTestTimeout(self, time):
         self._checkParamType("time", time, int)
         self._timeout = time
@@ -325,7 +258,7 @@ class PerformanceTestCase(unittest.TestCase):
             self._appendRunReportToFinalTestReport(reportstring)
 
             # Tell the user the Model Runtime in the unit tests
-            if self._is_nosetest_output_veryverbose() == True:
+            if is_nosetest_output_veryverbose() == True:
                 noselog("\n")
                 noselog(reportstring)
 
@@ -436,7 +369,7 @@ class PerformanceTestCase(unittest.TestCase):
                 pass
             else:
                 exitstr = str("Unable to create directory {0}").format(path)
-                noselog(exitstr)
+                noselog(exitstr, OVERRIDE_NORMAL_OUTPUT)
                 sys.exit(exitstr)
 
     def _rm_file(self, path):
@@ -468,26 +401,6 @@ class PerformanceTestCase(unittest.TestCase):
 
 #####
 
-    # Nosetests when run sets the verbosity as defined here
-    # nosetests -q <test>             : NOSE_VERBOSITY = 0  (quiet)
-    # nosetests    <test>             : NOSE_VERBOSITY = 1  (normal)
-    # nosetests -v <test>             : NOSE_VERBOSITY = 2  (verbose)
-    # nosetests --verbosity=xx <test> : NOSE_VERBOSITY = xx (very verbose if xx > 2)
-
-    def _is_nosetest_output_veryverbose(self):
-        return (testglobals.NOSE_VERBOSITY > 2)
-
-    def _is_nosetest_output_verbose(self):
-        return (testglobals.NOSE_VERBOSITY >= 2)
-
-    def _is_nosetest_output_normal(self):
-        return (testglobals.NOSE_VERBOSITY == 1)
-
-    def _is_nosetest_output_quiet(self):
-        return (testglobals.NOSE_VERBOSITY == 0)
-
-#####
-
     def _appendRunReportToFinalTestReport(self, reportstring):
         testglobals.packagerunreportlist.append(reportstring)
 
@@ -508,12 +421,40 @@ class PerformanceTestCase(unittest.TestCase):
             sys.exit(exitstr)
 
 ################################################################################
+# Global support routines
 
-def noselog(logmsg):
-    # Nose allows writes to stderr to show up on the screenWrite to std err
-    if isinstance(logmsg, str):
-        sys.stderr.write(logmsg)
-    if isinstance(logmsg, list):
-        for logstr in logmsg:
-            sys.stderr.write(logstr)
+def is_nosetest_output_veryverbose():
+    return (testglobals.NOSE_VERBOSITY > NOSE_OUTPUT_VERBOSE)
+
+def is_nosetest_output_verbose():
+    return (testglobals.NOSE_VERBOSITY >= NOSE_OUTPUT_VERBOSE)
+
+def is_nosetest_output_normal():
+    return (testglobals.NOSE_VERBOSITY == NOSE_OUTPUT_NORMAL)
+
+def is_nosetest_output_quiet():
+    return (testglobals.NOSE_VERBOSITY == NOSE_OUTPUT_QUIET)
+
+###
+
+def noselog(logmsg, override_normal_mode = False):
+    # Check to see if we are in quiet mode
+    if is_nosetest_output_quiet():
+        return
+
+    # Check to see if we are supposed to output the log
+    if is_nosetest_output_verbose() or override_normal_mode:
+        # Nose allows writes to stderr to show up on the screenWrite to std err
+        if isinstance(logmsg, str):
+            sys.stderr.write(logmsg)
+        if isinstance(logmsg, list):
+            for logstr in logmsg:
+                sys.stderr.write(logstr)
+###
+
+def noselog_debug(logmsg):
+    if is_nosetest_output_veryverbose():
+        logmsg = "DEBUG: " + logmsg
+        noselog(logmsg, override_normal_mode = True)
+
 
