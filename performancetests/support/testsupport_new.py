@@ -93,6 +93,10 @@ class PerformanceTestCase(unittest.TestCase):
         # Using pyutilib to import the test model file
         loaded_module = import_file(self._testmodelfilepath)
 
+        # cd to the model directory
+        savedcwd = os.getcwd()
+        os.chdir(self._modeldir)
+
         noselog_debug('\nModel Create %s (%d)...\n' % (self._modelname, self._testsize))
 
         model = loaded_module.create_test_model(size=self._testsize)
@@ -103,6 +107,9 @@ class PerformanceTestCase(unittest.TestCase):
             model = model.create_instance(self._testdatafilepath)
         else:
             noselog_debug('MODEL IS CONCRETE - INSTANCE ALREADY CREATED\n')
+
+        # Restore the saved directory
+        os.chdir(savedcwd)
 
         self._createdtestmodelinstance = model
         return model

@@ -51,5 +51,3 @@ def create_test_model(size):
 
     return model
 
-def pyomo_create_model(options=None, model_options=None, size=4):
-    return create_model(options, model_options, size)
