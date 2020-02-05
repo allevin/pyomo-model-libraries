@@ -9,14 +9,8 @@
 #  ___________________________________________________________________________
 
 from pyomo.environ import *
-import sys
 
-#def create_model(options=None, model_options=None, size=4):
-def pyomo_create_model(options=None, model_options=None, size=4):
-    sys.stderr.write("AARON: options = {0}\n".format(options))
-    sys.stderr.write("AARON: model_options = {0}\n".format(model_options))
-    sys.stderr.write("AARON: size = {0}\n".format(size))
-
+def create_test_model(size):
     import random
 
     random.seed(1000)
@@ -57,6 +51,3 @@ def pyomo_create_model(options=None, model_options=None, size=4):
 
     return model
 
-
-#def pyomo_create_model(options=None, model_options=None, size=4):
-#    return create_model(size)

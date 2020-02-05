@@ -10,7 +10,7 @@
 
 from pyomo.environ import *
 
-def create_model(options=None, model_options=None):
+def create_test_model(size):
     import random
 
     random.seed(1000)
@@ -52,4 +52,4 @@ def create_model(options=None, model_options=None):
     return model
 
 def pyomo_create_model(options=None, model_options=None, size=4):
-    return create_model(size)
+    return create_model(options, model_options, size)

@@ -32,8 +32,8 @@ class Test_pmedian1_4(PerformanceTestCase):
     def setUp(self):
         self.setTestModelDir('pmedian_models')
         self.setTestModelName('model_pmedian1')
-        self.setTestSize(8)
-        self.setTestDataFileName("pmedian.test8.dat")
+        self.setTestSize(4)
+        self.setTestDataFileName("pmedian.test4.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()

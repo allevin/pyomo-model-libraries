@@ -10,7 +10,8 @@
 
 from pyomo.environ import *
 
-def create_model(N):
+def create_test_model(size):
+    N = size
 
     model = ConcreteModel()
 
@@ -26,5 +27,3 @@ def create_model(N):
 
     return model
 
-def pyomo_create_model(options=None, model_options=None, size=100):
-    return create_model(size)

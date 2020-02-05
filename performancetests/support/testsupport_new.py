@@ -95,7 +95,7 @@ class PerformanceTestCase(unittest.TestCase):
 
         noselog_debug('\nModel Create %s (%d)...\n' % (self._modelname, self._testsize))
 
-        model = loaded_module.pyomo_create_model(size=self._testsize)
+        model = loaded_module.create_test_model(size=self._testsize)
 
         # Now instantiate the model if it is abstract
         if isinstance(model, AbstractModel):
