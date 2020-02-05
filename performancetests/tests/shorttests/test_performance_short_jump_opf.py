@@ -38,7 +38,7 @@ class Test_jump_opf_bus_662(PerformanceTestCase):
     def tearDown(self):
         self.writeTestTimingResults()
 
-    @unittest.category('bar', 'gms', 'nl', 'lp')
+    @unittest.category('gms', 'nl')
     def test_jump_opf_bus_662(self):
 
         m = self.createModelInstance()
@@ -68,7 +68,7 @@ class Test_jump_opf_bus_quick_662(PerformanceTestCase):
     def tearDown(self):
         self.writeTestTimingResults()
 
-    @unittest.category('bar', 'gms', 'nl', 'lp')
+    @unittest.category('gms', 'nl')
     def test_jump_opf_bus_quick_662(self):
 
         m = self.createModelInstance()
@@ -88,5 +88,4 @@ class Test_jump_opf_bus_quick_662(PerformanceTestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
 

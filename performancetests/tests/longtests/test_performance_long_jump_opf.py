@@ -12,77 +12,80 @@
 # Performance Tests for jump_opf
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
 @unittest.category('performance', 'long')
-class Test_jump_opf_6620bus(PerformanceTestCase):
+class Test_jump_opf_bus_6620(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('jump_models')
-        self.setTestModelName('opf_6620bus')
-        self.setTestNum('6620')
+        self.setTestModelName('model_opf_bus')
+        self.setTestSize(6620)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('nl')
-    def test_jump_opf_6620bus_nl(self):
-        self.runPyomoModelTest('nl')
+    @unittest.category('gms', 'nl')
+    def test_jump_opf_bus_6620(self):
 
-    @unittest.category('bar')
-    def test_jump_opf_6620bus_bar(self):
-        self.skipThisTest("jump_ofp_6620bus_bar is not testable - does not support unary function cos")
-        self.runPyomoModelTest('bar')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('gms')
-    def test_jump_opf_6620bus_gms(self):
-        self.runPyomoModelTest('gms')
+        # NOTEL bar is not testable - model_opf_bus does not support unary function cos
+        #self.writeModelInstance(m, 'bar')
+        #self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
 
 ###
 
 @unittest.category('performance', 'long')
-class Test_jump_opf_6620bus_quick(PerformanceTestCase):
+class Test_jump_opf_bus_quick_6620(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('jump_models')
-        self.setTestModelName('opf_6620bus_quick')
-        self.setTestNum('6620')
+        self.setTestModelName('model_opf_bus_quick')
+        self.setTestSize(6620)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('nl')
-    def test_jump_opf_6620bus_quick_nl(self):
-        self.runPyomoModelTest('nl')
+    @unittest.category('gms', 'nl')
+    def test_jump_opf_bus_quick_6620(self):
 
-    @unittest.category('bar')
-    def test_jump_opf_6620bus_quick_bar(self):
-        self.skipThisTest("jump_ofp_6620bus_quick_bar is not testable - does not support unary function cos")
-        self.runPyomoModelTest('bar')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('gms')
-    def test_jump_opf_6620bus_quick_gms(self):
-        self.runPyomoModelTest('gms')
+        # NOTEL bar is not testable - model_opf_bus does not support unary function cos
+        #self.writeModelInstance(m, 'bar')
+        #self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
 
 ###
 
 if __name__ == "__main__":
     unittest.main()
-
 

@@ -12,83 +12,84 @@
 # Performance Tests for bilinear
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
 @unittest.category('performance', 'long')
 class Test_bilinear1_100000(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('misc_models')
-        self.setTestModelName('bilinear1_100000')
-        self.setTestNum('100000')
+        self.setTestModelName('model_bilinear1')
+        self.setTestSize(100000)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('lp')
-    def test_bilinear1_100000_lp(self):
-        self.runPyomoModelTest('lp')
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_bilinear1_100000(self):
 
-    @unittest.category('nl')
-    def test_bilinear1_100000_nl(self):
-        self.runPyomoModelTest('nl')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('bar')
-    def test_bilinear1_100000_bar(self):
-        self.runPyomoModelTest('bar')
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
-    @unittest.category('gms')
-    def test_bilinear1_100000_gms(self):
-        self.runPyomoModelTest('gms')
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
-#@unittest.category('performance', 'long')
-#class Test_bilinear2_100000(PerformanceTestCase):
-#
-#    def setUp(self):
-#        self.setTestModelDir('misc_models')
-#        self.setTestModelName('bilinear2_100000')
-#        self.setTestNum('100000')
-#        self.setTestDataFileName("")
-#        self.setTestTimeout(60)
-#
-#    def tearDown(self):
-#        pass
-#
-#    @unittest.category('lp')
-#    def test_bilinear2_100000_lp(self):
-#        self.runPyomoModelTest('lp')
-#
-#    @unittest.category('nl')
-#    def test_bilinear2_100000_nl(self):
-#        self.runPyomoModelTest('nl')
-#
-#    @unittest.category('bar')
-#    def test_bilinear2_100000_bar(self):
-#        self.runPyomoModelTest('bar')
-#
-#    @unittest.category('gms')
-#    def test_bilinear2_100000_gms(self):
-#        self.runPyomoModelTest('gms')
+@unittest.category('performance', 'long')
+class Test_bilinear2_100000(PerformanceTestCase):
+
+    def setUp(self):
+        self.setTestModelDir('misc_models')
+        self.setTestModelName('model_bilinear2')
+        self.setTestSize(100000)
+        self.setTestDataFileName("")
+
+    def tearDown(self):
+        self.writeTestTimingResults()
+
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_bilinear2_100000(self):
+
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
+
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
 if __name__ == "__main__":
     unittest.main()
-
 

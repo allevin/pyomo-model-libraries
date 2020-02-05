@@ -93,4 +93,3 @@ class Test_bilinear2_100(PerformanceTestCase):
 if __name__ == "__main__":
     unittest.main()
 
-

@@ -38,7 +38,7 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
     def tearDown(self):
         self.writeTestTimingResults()
 
-    @unittest.category('bar', 'gms', 'nl', 'lp')
+    @unittest.category('gms', 'nl')
     def test_jump_clnbeam_5000(self):
 
         m = self.createModelInstance()
