@@ -12,49 +12,50 @@
 # Performance Tests for clnlbeam
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
 @unittest.category('performance', 'long')
-class Test_clnlbeam_50000(PerformanceTestCase):
+class Test_jump_clnlbeam_50000(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('jump_models')
-        self.setTestModelName('clnlbeam')
-        self.setTestNum('50000')
+        self.setTestModelName('model_clnlbeam')
+        self.setTestSize(50000)
         self.setTestDataFileName("clnlbeam-50000.dat")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('nl')
-    def test_clnlbeam_50000_nl(self):
-        self.runPyomoModelTest('nl')
+    @unittest.category('gms', 'nl')
+    def test_jump_clnbeam_50000(self):
 
-    @unittest.category('bar')
-    def test_clnlbeam_50000_bar(self):
-        self.skipThisTest("jump_clnlbeam_50000_bar is not testable - does not support unary function sin")
-        self.runPyomoModelTest('bar')
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('gms')
-    def test_clnlbeam_50000_gms(self):
-        self.runPyomoModelTest('gms')
+        # NOTEL bar is not testable - model_clnbeam does not support unary function sin
+        #self.writeModelInstance(m, 'bar')
+        #self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
 
 ###
 
 if __name__ == "__main__":
     unittest.main()
-
 

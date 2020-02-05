@@ -59,4 +59,3 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
 if __name__ == "__main__":
     unittest.main()
 
-
