@@ -71,7 +71,7 @@ class Test_pmedian2_4(PerformanceTestCase):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_pmedian1_4(self):
+    def test_pmedian2_4(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")

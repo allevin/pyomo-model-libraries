@@ -12,6 +12,7 @@ import os
 import inspect
 import nose
 import pyomo
+import pyutilib.misc.timing as timing
 from performancetests.support import testglobals
 from performancetests.support import testsupport
 from performancetests.support.testsupport import *
@@ -30,6 +31,7 @@ def setup_package():
 
 def teardown_package():
     noselog_debug('TEARDOWN NOSE PACKAGE\n')
+
     if is_nosetest_output_verbose() or is_nosetest_output_normal():
         noselog('\n', OVERRIDE_NORMAL_OUTPUT)
         if len(testglobals.packageskippedreportlist) > 0:
@@ -39,7 +41,7 @@ def teardown_package():
         noselog('\nPerformance Testing Report:\n', OVERRIDE_NORMAL_OUTPUT)
         noselog(testglobals.packagerunreportlist, OVERRIDE_NORMAL_OUTPUT)
 
-        report = str(('\nTotal Runtime for all tests ') +
+        report = str(('Total Runtime for all tests ') +
                       ('= %f seconds\n') % testglobals.packagetotalruntime)
         noselog(report, OVERRIDE_NORMAL_OUTPUT)
     pass

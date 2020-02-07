@@ -79,6 +79,7 @@ class PerformanceTestCase(unittest.TestCase):
 
     def initializeTestTimer(self):
         self._testTimer.tic('')
+        self._totalRuntimeTimer.tic('')
 
 ###
 
@@ -142,6 +143,10 @@ class PerformanceTestCase(unittest.TestCase):
         self._checkParamType('performance_result_name',
                              performance_result_name, str)
 
+        # Print out an indicator of the sub-test progress
+        if is_nosetest_output_verbose() or is_nosetest_output_normal():
+            noselog('+', OVERRIDE_NORMAL_OUTPUT)
+
         deltatime = self._testTimer.toc('')
         self._runtimeinfo[performance_result_name] = deltatime
         noselog_debug('%s Time = %s\n' % (performance_result_name, deltatime))
@@ -161,7 +166,13 @@ class PerformanceTestCase(unittest.TestCase):
 
         deltatime = self._totalRuntimeTimer.toc('')
         self._runtimeinfo['totalruntime'] = deltatime
-        self._setTotalRunTime(deltatime)
+        # Build a report string
+        reportstring = '%s_%d --%s-- = %f' % (self._modelname,
+                                            self._testsize,
+                                            'Total Runtime',
+                                            deltatime) + '\n\n'
+        self._appendRunReportToFinalTestReport(reportstring)
+        self._addTotalRunTimeToPackageTIme(deltatime)
         self._save_timing_data_in_csv()
 
 ###
@@ -223,6 +234,8 @@ class PerformanceTestCase(unittest.TestCase):
 
         self._timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+        self.initializeTestTimer()
+
         # Figure out the path to the python test model to run
         self._testmodelfilepath = '%s/%s.py' % (self._modeldir, self._modelname)
         if not os.path.isfile(self._testmodelfilepath):
@@ -240,8 +253,6 @@ class PerformanceTestCase(unittest.TestCase):
         else:
             self._testdatafilepath = ''
 
-        self.initializeTestTimer()
-        self._totalRuntimeTimer.tic('')
 
 #####
 
@@ -305,10 +316,8 @@ class PerformanceTestCase(unittest.TestCase):
     def _appendSkipReportToFinalTestReport(self, reportstring):
         testglobals.packageskippedreportlist.append(reportstring)
 
-####
-
-    def _setTotalRunTime(self, runtime):
-        testglobals.packagetotalruntime = runtime
+    def _addTotalRunTimeToPackageTIme(self, RunTime):
+        testglobals.packagetotalruntime += RunTime
 
 ####
 
@@ -359,3 +368,8 @@ def noselog_debug(logmsg):
         noselog(logmsg, override_normal_mode = True)
 
 
+def initTestModule():
+    noselog_debug("AARON: INIT\n")
+
+def finalizeTestModuleResults():
+    noselog_debug("AARON: FINALIZE\n")

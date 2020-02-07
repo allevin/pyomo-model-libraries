@@ -39,7 +39,7 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
         self.writeTestTimingResults()
 
     @unittest.category('gms', 'nl')
-    def test_jump_clnbeam_5000(self):
+    def test_jump_clnlbeam_5000(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")

@@ -12,44 +12,49 @@
 # Performance Tests for stochpdegas
 #
 
-from performancetests.support.testsupport import *
+from performancetests.support.testsupport_new import *
 
 ###
 
 def setup_module():
-    #noselog("SETUP TEST MODULE\n")
+    #noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
-    #noselog("TEARDOWN TEST MODULE\n")
+    #noselog_debug("TEARDOWN TEST MODULE\n")
     pass
 
-###
+################################################################################
 
 @unittest.category('performance', 'short')
 class Test_stochpdegas(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('dae_models')
-        self.setTestModelName('run_stochpdegas1_automatic')
-        self.setTestNum('0')
+        self.setTestModelName('model_run_stochpdegas1_automatic')
+        self.setTestSize(0)
         self.setTestDataFileName("")
-        self.setTestTimeout(60)
 
     def tearDown(self):
-        pass
+        self.writeTestTimingResults()
 
-    @unittest.category('nl')
-    def test_stochpdegas_nl(self):
-        self.runPyomoModelTest('nl', scriptmode = True)
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_stochpdegas(self):
 
-    @unittest.category('bar')
-    def test_stochpdegas_bar(self):
-        self.runPyomoModelTest('bar', scriptmode = True)
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
 
-    @unittest.category('gms')
-    def test_stochpdegas_gms(self):
-        self.runPyomoModelTest('gms', scriptmode = True)
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 

@@ -17,6 +17,7 @@ def accessTestGlobals():
     global packagetotalruntime
     global pyomo_sha
 
+
     NOSE_VERBOSITY = 0
     packagerunreportlist = []
     packageskippedreportlist = []

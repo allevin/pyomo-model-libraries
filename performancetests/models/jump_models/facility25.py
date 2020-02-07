@@ -16,7 +16,7 @@ model.s = Var(model.Grid, model.Grid, model.Facs, bounds=(0.0, None))
 model.r = Var(model.Grid, model.Grid, model.Facs, model.Dims)
 
 def obj_rule(mod):
-    return 1.0*mod.d 
+    return 1.0*mod.d
 model.obj = Objective(rule=obj_rule)
 
 def assmt_rule(mod, i, j):
