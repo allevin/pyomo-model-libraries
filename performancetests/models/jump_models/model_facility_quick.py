@@ -14,8 +14,8 @@ def create_test_model(size):
 
     model = AbstractModel()
 
-    model.G = size
-    model.F = size
+    model.G = Param(within=PositiveIntegers)
+    model.F = Param(within=PositiveIntegers)
 
     model.Grid = RangeSet(0, model.G)
     model.Facs = RangeSet(1, model.F)

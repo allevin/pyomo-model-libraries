@@ -33,7 +33,7 @@ class Test_jump_facility_25(PerformanceTestCase):
         self.setTestModelDir('jump_models')
         self.setTestModelName('model_facility')
         self.setTestSize(25)
-        self.setTestDataFileName("")
+        self.setTestDataFileName("facility-25.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
@@ -44,49 +44,49 @@ class Test_jump_facility_25(PerformanceTestCase):
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
 
-#        self.writeModelInstance(m, 'bar')
-#        self.capturePerformanceResultTime("Write bar")
-#
-#        self.writeModelInstance(m, 'gms')
-#        self.capturePerformanceResultTime("Write gms")
-#
-#        self.writeModelInstance(m, 'nl')
-#        self.capturePerformanceResultTime("Write nl")
-#
-#        self.writeModelInstance(m, 'lp')
-#        self.capturePerformanceResultTime("Write lp")
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
-#@unittest.category('performance', 'long')
-#class Test_jump_facility_quick_25(PerformanceTestCase):
-#
-#    def setUp(self):
-#        self.setTestModelDir('jump_models')
-#        self.setTestModelName('model_facility_quick')
-#        self.setTestSize(25)
-#        self.setTestDataFileName("")
-#
-#    def tearDown(self):
-#        self.writeTestTimingResults()
-#
-#    @unittest.category('bar', 'gms', 'nl', 'lp')
-#    def test_jump_facility_quick_25(self):
-#
-#        m = self.createModelInstance()
-#        self.capturePerformanceResultTime("Model Declaration")
-#
-#        self.writeModelInstance(m, 'bar')
-#        self.capturePerformanceResultTime("Write bar")
-#
-#        self.writeModelInstance(m, 'gms')
-#        self.capturePerformanceResultTime("Write gms")
-#
-#        self.writeModelInstance(m, 'nl')
-#        self.capturePerformanceResultTime("Write nl")
-#
-#        self.writeModelInstance(m, 'lp')
-#        self.capturePerformanceResultTime("Write lp")
+@unittest.category('performance', 'long')
+class Test_jump_facility_quick_25(PerformanceTestCase):
+
+    def setUp(self):
+        self.setTestModelDir('jump_models')
+        self.setTestModelName('model_facility_quick')
+        self.setTestSize(25)
+        self.setTestDataFileName("facility-25.dat")
+
+    def tearDown(self):
+        self.writeTestTimingResults()
+
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_jump_facility_quick_25(self):
+
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
+
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
