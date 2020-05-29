@@ -15,7 +15,7 @@
 # Slight changes to match testing naming convention
 #
 
-from performancetests.support.testsupport_new import *
+from performancetests.support.testsupport import *
 
 ###
 

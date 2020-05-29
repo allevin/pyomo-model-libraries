@@ -12,7 +12,7 @@
 # Performance Tests for jump_lqcp
 #
 
-from performancetests.support.testsupport_new import *
+from performancetests.support.testsupport import *
 
 ###
 
