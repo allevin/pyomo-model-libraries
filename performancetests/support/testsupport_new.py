@@ -10,20 +10,15 @@
 
 import os
 import sys
-import re
 import csv
 import gc
 import errno
-import pyomo
 import inspect
 import datetime
-import importlib
-import pyutilib.subprocess
 import pyutilib.th as unittest
 import pyutilib.misc.timing as timing
 import pyutilib.misc.import_file as import_file
 from performancetests.support import testglobals
-from multiprocessing import Process
 
 from pyomo.core.base.PyomoModel import *
 
@@ -369,7 +364,7 @@ def noselog_debug(logmsg):
 
 
 def initTestModule():
-    noselog_debug("AARON: INIT\n")
+    noselog_debug("initTestModule()\n")
 
 def finalizeTestModuleResults():
-    noselog_debug("AARON: FINALIZE\n")
+    noselog_debug("finalizeTestModuleResults()\n")
