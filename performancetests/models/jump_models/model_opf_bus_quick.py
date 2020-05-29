@@ -11,8 +11,8 @@
 from pyomo.environ import *
 
 def create_test_model(size):
-    busfilename = "IEEE{0}.bus".format(size)
-    branchfilename = "IEEE{0}.branch".format(size)
+    busfilename = "data-opf-IEEE{0}.bus".format(size)
+    branchfilename = "data-opf-IEEE{0}.branch".format(size)
 
     class Bus:
         pass

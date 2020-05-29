@@ -33,7 +33,7 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
         self.setTestModelDir('jump_models')
         self.setTestModelName('model_clnlbeam')
         self.setTestSize(5000)
-        self.setTestDataFileName("clnlbeam-5000.dat")
+        self.setTestDataFileName("data-clnlbeam-5000.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
@@ -44,7 +44,7 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
 
-        # NOTEL bar is not testable - model_clnbeam does not support unary function sin
+        # NOTE: bar is not testable - model_clnbeam does not support unary function sin
         #self.writeModelInstance(m, 'bar')
         #self.capturePerformanceResultTime("Write bar")
 
@@ -53,6 +53,10 @@ class Test_jump_clnlbeam_5000(PerformanceTestCase):
 
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
+
+        # NOTE: lp is not testable - model_clnbeam cannot write legal LP file
+        #self.writeModelInstance(m, 'lp')
+        #self.capturePerformanceResultTime("Write lp")
 
 ###
 

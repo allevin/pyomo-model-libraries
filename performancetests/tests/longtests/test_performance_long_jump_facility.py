@@ -33,7 +33,7 @@ class Test_jump_facility_25(PerformanceTestCase):
         self.setTestModelDir('jump_models')
         self.setTestModelName('model_facility')
         self.setTestSize(25)
-        self.setTestDataFileName("facility-25.dat")
+        self.setTestDataFileName("data-facility-25.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
@@ -65,7 +65,7 @@ class Test_jump_facility_quick_25(PerformanceTestCase):
         self.setTestModelDir('jump_models')
         self.setTestModelName('model_facility_quick')
         self.setTestSize(25)
-        self.setTestDataFileName("facility-25.dat")
+        self.setTestDataFileName("data-facility-25.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()

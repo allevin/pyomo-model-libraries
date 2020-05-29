@@ -54,6 +54,10 @@ class Test_jump_opf_bus_662(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
+        # NOTE: lp is not testable - model_opf_bus cannot write legal LP file
+        #self.writeModelInstance(m, 'lp')
+        #self.capturePerformanceResultTime("Write lp")
+        
 ###
 
 @unittest.category('performance', 'short')
@@ -74,7 +78,7 @@ class Test_jump_opf_bus_quick_662(PerformanceTestCase):
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
 
-        # NOTEL bar is not testable - model_opf_bus does not support unary function cos
+        # NOTEL bar is not testable - model_opf_bus_quick does not support unary function cos
         #self.writeModelInstance(m, 'bar')
         #self.capturePerformanceResultTime("Write bar")
 
@@ -83,6 +87,10 @@ class Test_jump_opf_bus_quick_662(PerformanceTestCase):
 
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
+
+        # NOTE: lp is not testable - model_opf_bus_quick cannot write legal LP file
+        #self.writeModelInstance(m, 'lp')
+        #self.capturePerformanceResultTime("Write lp")
 
 ###
 
