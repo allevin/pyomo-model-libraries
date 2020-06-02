@@ -175,18 +175,19 @@ class PerformanceTestCase(unittest.TestCase):
 
 ###
 
-    def setTestModelDir(self, dir):
-        self._checkParamType('dir', dir, str)
-        modeldir = dir
+    def setTestModelDir(self, indir):
+        self._checkParamType('indir', indir, str)
+        modeldir = indir
         # If the path does not exist, then try to use our model path
         if not os.path.isdir(modeldir):
             topmodeldir = self.getTopTestingDir() + '/models/'
-            secondarymodeldir = '%s%s' % (topmodeldir, dir)
+            secondarymodeldir = '%s%s' % (topmodeldir, indir)
             if not os.path.isdir(secondarymodeldir):
                 exitstr = str(('TEST-ERROR: setTestModelDir() - Directory {0} does ') +
-                               ('not exist; nor is it under {1}').format(dir, topmodeldir))
+                               ('not exist; nor is it under {1}')).format(indir, topmodeldir)
                 sys.exit(exitstr)
             modeldir = secondarymodeldir
+        noselog_debug("AARON WAS HERE")
         self._modeldir = modeldir
 
 ###
