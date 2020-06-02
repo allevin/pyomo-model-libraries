@@ -27,3 +27,5 @@ def create_test_model(size):
 
     return model
 
+def post_instance_processing(model_instance):
+    pass

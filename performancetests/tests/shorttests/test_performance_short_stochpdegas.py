@@ -31,9 +31,9 @@ class Test_stochpdegas(PerformanceTestCase):
 
     def setUp(self):
         self.setTestModelDir('dae_models')
-        self.setTestModelName('model_run_stochpdegas1_automatic')
+        self.setTestModelName('model_stochpdegas1_automatic')
         self.setTestSize(0)
-        self.setTestDataFileName("")
+        self.setTestDataFileName("data-stochpdegas_automatic.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
@@ -53,8 +53,9 @@ class Test_stochpdegas(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
-        self.writeModelInstance(m, 'lp')
-        self.capturePerformanceResultTime("Write lp")
+        # NOTE: lp is not testable - model_stochpdegas1_automatic cannot write legal LP file
+        #self.writeModelInstance(m, 'lp')
+        #self.capturePerformanceResultTime("Write lp")
 
 ###
 

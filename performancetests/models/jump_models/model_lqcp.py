@@ -59,3 +59,6 @@ def create_test_model(size):
     model.bc2 = Constraint(RangeSet(1,model.n), rule=bc2_rule)
 
     return model
+
+def post_instance_processing(model_instance):
+    pass

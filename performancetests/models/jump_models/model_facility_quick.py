@@ -53,3 +53,6 @@ def create_test_model(size):
     model.quaddist = Constraint(model.Grid, model.Grid, model.Facs, rule=quaddist_rule)
 
     return model
+
+def post_instance_processing(model_instance):
+    pass

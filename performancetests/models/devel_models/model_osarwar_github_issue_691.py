@@ -136,3 +136,5 @@ def create_test_model(size):
     p, x, z, n = center_and_standardize(p,x1,z1,n)
     Benchmark_regressors, Benchmark_coefficients = BSS_benchmark(x,z,p,n,120)
 
+def post_instance_processing(model_instance):
+    pass

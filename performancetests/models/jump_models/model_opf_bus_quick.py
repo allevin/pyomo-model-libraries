@@ -207,3 +207,6 @@ def create_test_model(size):
             model.branch_def[i].fixed = True
 
     return model
+
+def post_instance_processing(model_instance):
+    pass

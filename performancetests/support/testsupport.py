@@ -104,6 +104,9 @@ class PerformanceTestCase(unittest.TestCase):
         else:
             noselog_debug('MODEL IS CONCRETE - INSTANCE ALREADY CREATED\n')
 
+        # Perform any post instance processing / setup (if the function exists)
+        loaded_module.post_instance_processing(model_instance=model)
+
         # Restore the saved directory
         os.chdir(savedcwd)
 
