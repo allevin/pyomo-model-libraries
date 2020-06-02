@@ -30,7 +30,7 @@ def teardown_module():
 class Test_diag1_1000000(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('misc_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
         self.setTestModelName('model_diag1')
         self.setTestSize(1000000)
         self.setTestDataFileName("")
@@ -62,7 +62,7 @@ class Test_diag1_1000000(PerformanceTestCase):
 class Test_diag2_1000000(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('misc_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
         self.setTestModelName('model_diag2')
         self.setTestSize(1000000)
         self.setTestDataFileName("")

@@ -9,7 +9,7 @@
 #  ___________________________________________________________________________
 
 #
-# Performance Tests for jump_lqcp
+# Performance Tests for diag
 #
 
 from performancetests.support.testsupport import *
@@ -26,20 +26,20 @@ def teardown_module():
 
 ################################################################################
 
-@unittest.category('performance', 'long')
-class Test_jump_lqcp_500(PerformanceTestCase):
+@unittest.category('performance', 'short')
+class Test_diag1_100(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
-        self.setTestModelName('model_lqcp')
-        self.setTestSize(500)
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
+        self.setTestModelName('model_diag1')
+        self.setTestSize(100)
         self.setTestDataFileName("")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_jump_lqcp_500(self):
+    def test_diag1_100(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
@@ -58,20 +58,20 @@ class Test_jump_lqcp_500(PerformanceTestCase):
 
 ###
 
-@unittest.category('performance', 'long')
-class Test_jump_lqcp_quick_500(PerformanceTestCase):
+@unittest.category('performance', 'short')
+class Test_diag2_100(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
-        self.setTestModelName('model_lqcp_quick')
-        self.setTestSize(500)
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
+        self.setTestModelName('model_diag2')
+        self.setTestSize(100)
         self.setTestDataFileName("")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_jump_lqcp_quick_500(self):
+    def test_diag2_100(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")

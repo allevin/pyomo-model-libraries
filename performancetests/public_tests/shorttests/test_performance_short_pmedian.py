@@ -9,7 +9,7 @@
 #  ___________________________________________________________________________
 
 #
-# Performance Tests for bilinear
+# Performance Tests for pmedian
 #
 
 from performancetests.support.testsupport import *
@@ -17,7 +17,7 @@ from performancetests.support.testsupport import *
 ###
 
 def setup_module():
-    #noselog_debug("SETUP TEST MODULE\n")
+    noselog_debug("SETUP TEST MODULE\n")
     pass
 
 def teardown_module():
@@ -27,19 +27,19 @@ def teardown_module():
 ################################################################################
 
 @unittest.category('performance', 'short')
-class Test_bilinear1_100(PerformanceTestCase):
+class Test_pmedian1_4(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('misc_models')
-        self.setTestModelName('model_bilinear1')
-        self.setTestSize(100)
-        self.setTestDataFileName("")
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/pmedian_models')
+        self.setTestModelName('model_pmedian1')
+        self.setTestSize(4)
+        self.setTestDataFileName("data-pmedian.test4.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_bilinear1_100(self):
+    def test_pmedian1_4(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
@@ -59,19 +59,19 @@ class Test_bilinear1_100(PerformanceTestCase):
 ###
 
 @unittest.category('performance', 'short')
-class Test_bilinear2_100(PerformanceTestCase):
+class Test_pmedian2_4(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('misc_models')
-        self.setTestModelName('model_bilinear2')
-        self.setTestSize(100)
-        self.setTestDataFileName("")
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/pmedian_models')
+        self.setTestModelName('model_pmedian2')
+        self.setTestSize(4)
+        self.setTestDataFileName("data-pmedian.test4.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_bilinear2_100(self):
+    def test_pmedian2_4(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
@@ -87,6 +87,7 @@ class Test_bilinear2_100(PerformanceTestCase):
 
         self.writeModelInstance(m, 'lp')
         self.capturePerformanceResultTime("Write lp")
+
 
 ###
 

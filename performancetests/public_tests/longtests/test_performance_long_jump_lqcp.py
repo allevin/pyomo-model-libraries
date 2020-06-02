@@ -9,7 +9,7 @@
 #  ___________________________________________________________________________
 
 #
-# Performance Tests for jump_opf
+# Performance Tests for jump_lqcp
 #
 
 from performancetests.support.testsupport import *
@@ -26,27 +26,26 @@ def teardown_module():
 
 ################################################################################
 
-@unittest.category('performance', 'short')
-class Test_jump_opf_bus_662(PerformanceTestCase):
+@unittest.category('performance', 'long')
+class Test_jump_lqcp_500(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
-        self.setTestModelName('model_opf_bus')
-        self.setTestSize(662)
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/jump_models')
+        self.setTestModelName('model_lqcp')
+        self.setTestSize(500)
         self.setTestDataFileName("")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
-    @unittest.category('gms', 'nl')
-    def test_jump_opf_bus_662(self):
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_jump_lqcp_500(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
 
-        # NOTEL bar is not testable - model_opf_bus does not support unary function cos
-        #self.writeModelInstance(m, 'bar')
-        #self.capturePerformanceResultTime("Write bar")
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
         self.writeModelInstance(m, 'gms')
         self.capturePerformanceResultTime("Write gms")
@@ -54,33 +53,31 @@ class Test_jump_opf_bus_662(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
-        # NOTE: lp is not testable - model_opf_bus cannot write legal LP file
-        #self.writeModelInstance(m, 'lp')
-        #self.capturePerformanceResultTime("Write lp")
-        
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
+
 ###
 
-@unittest.category('performance', 'short')
-class Test_jump_opf_bus_quick_662(PerformanceTestCase):
+@unittest.category('performance', 'long')
+class Test_jump_lqcp_quick_500(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
-        self.setTestModelName('model_opf_bus_quick')
-        self.setTestSize(662)
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/jump_models')
+        self.setTestModelName('model_lqcp_quick')
+        self.setTestSize(500)
         self.setTestDataFileName("")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
-    @unittest.category('gms', 'nl')
-    def test_jump_opf_bus_quick_662(self):
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_jump_lqcp_quick_500(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
 
-        # NOTEL bar is not testable - model_opf_bus_quick does not support unary function cos
-        #self.writeModelInstance(m, 'bar')
-        #self.capturePerformanceResultTime("Write bar")
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
 
         self.writeModelInstance(m, 'gms')
         self.capturePerformanceResultTime("Write gms")
@@ -88,9 +85,8 @@ class Test_jump_opf_bus_quick_662(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
-        # NOTE: lp is not testable - model_opf_bus_quick cannot write legal LP file
-        #self.writeModelInstance(m, 'lp')
-        #self.capturePerformanceResultTime("Write lp")
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 

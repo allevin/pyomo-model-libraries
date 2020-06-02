@@ -30,7 +30,7 @@ def teardown_module():
 class Test_jump_facility_25(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/jump_models')
         self.setTestModelName('model_facility')
         self.setTestSize(25)
         self.setTestDataFileName("data-facility-25.dat")
@@ -62,7 +62,7 @@ class Test_jump_facility_25(PerformanceTestCase):
 class Test_jump_facility_quick_25(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/jump_models')
         self.setTestModelName('model_facility_quick')
         self.setTestSize(25)
         self.setTestDataFileName("data-facility-25.dat")

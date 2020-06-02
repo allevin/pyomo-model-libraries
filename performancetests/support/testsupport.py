@@ -187,7 +187,6 @@ class PerformanceTestCase(unittest.TestCase):
                                ('not exist; nor is it under {1}')).format(indir, topmodeldir)
                 sys.exit(exitstr)
             modeldir = secondarymodeldir
-        noselog_debug("AARON WAS HERE")
         self._modeldir = modeldir
 
 ###

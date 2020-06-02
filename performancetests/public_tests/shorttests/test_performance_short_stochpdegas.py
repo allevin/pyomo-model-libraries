@@ -9,7 +9,7 @@
 #  ___________________________________________________________________________
 
 #
-# Performance Tests for diag
+# Performance Tests for stochpdegas
 #
 
 from performancetests.support.testsupport import *
@@ -27,19 +27,19 @@ def teardown_module():
 ################################################################################
 
 @unittest.category('performance', 'short')
-class Test_diag1_100(PerformanceTestCase):
+class Test_stochpdegas(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('misc_models')
-        self.setTestModelName('model_diag1')
-        self.setTestSize(100)
-        self.setTestDataFileName("")
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/dae_models')
+        self.setTestModelName('model_stochpdegas1_automatic')
+        self.setTestSize(0)
+        self.setTestDataFileName("data-stochpdegas_automatic.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_diag1_100(self):
+    def test_stochpdegas(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
@@ -53,43 +53,13 @@ class Test_diag1_100(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
-        self.writeModelInstance(m, 'lp')
-        self.capturePerformanceResultTime("Write lp")
-
-###
-
-@unittest.category('performance', 'short')
-class Test_diag2_100(PerformanceTestCase):
-
-    def setUp(self):
-        self.setTestModelDir('misc_models')
-        self.setTestModelName('model_diag2')
-        self.setTestSize(100)
-        self.setTestDataFileName("")
-
-    def tearDown(self):
-        self.writeTestTimingResults()
-
-    @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_diag2_100(self):
-
-        m = self.createModelInstance()
-        self.capturePerformanceResultTime("Model Declaration")
-
-        self.writeModelInstance(m, 'bar')
-        self.capturePerformanceResultTime("Write bar")
-
-        self.writeModelInstance(m, 'gms')
-        self.capturePerformanceResultTime("Write gms")
-
-        self.writeModelInstance(m, 'nl')
-        self.capturePerformanceResultTime("Write nl")
-
-        self.writeModelInstance(m, 'lp')
-        self.capturePerformanceResultTime("Write lp")
+        # NOTE: lp is not testable - model_stochpdegas1_automatic cannot write legal LP file
+        #self.writeModelInstance(m, 'lp')
+        #self.capturePerformanceResultTime("Write lp")
 
 ###
 
 if __name__ == "__main__":
     unittest.main()
+
 

@@ -9,7 +9,7 @@
 #  ___________________________________________________________________________
 
 #
-# Performance Tests for stochpdegas
+# Performance Tests for bilinear
 #
 
 from performancetests.support.testsupport import *
@@ -27,19 +27,19 @@ def teardown_module():
 ################################################################################
 
 @unittest.category('performance', 'short')
-class Test_stochpdegas(PerformanceTestCase):
+class Test_bilinear1_100(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('dae_models')
-        self.setTestModelName('model_stochpdegas1_automatic')
-        self.setTestSize(0)
-        self.setTestDataFileName("data-stochpdegas_automatic.dat")
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
+        self.setTestModelName('model_bilinear1')
+        self.setTestSize(100)
+        self.setTestDataFileName("")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('bar', 'gms', 'nl', 'lp')
-    def test_stochpdegas(self):
+    def test_bilinear1_100(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")
@@ -53,13 +53,43 @@ class Test_stochpdegas(PerformanceTestCase):
         self.writeModelInstance(m, 'nl')
         self.capturePerformanceResultTime("Write nl")
 
-        # NOTE: lp is not testable - model_stochpdegas1_automatic cannot write legal LP file
-        #self.writeModelInstance(m, 'lp')
-        #self.capturePerformanceResultTime("Write lp")
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
+
+###
+
+@unittest.category('performance', 'short')
+class Test_bilinear2_100(PerformanceTestCase):
+
+    def setUp(self):
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/misc_models')
+        self.setTestModelName('model_bilinear2')
+        self.setTestSize(100)
+        self.setTestDataFileName("")
+
+    def tearDown(self):
+        self.writeTestTimingResults()
+
+    @unittest.category('bar', 'gms', 'nl', 'lp')
+    def test_bilinear2_100(self):
+
+        m = self.createModelInstance()
+        self.capturePerformanceResultTime("Model Declaration")
+
+        self.writeModelInstance(m, 'bar')
+        self.capturePerformanceResultTime("Write bar")
+
+        self.writeModelInstance(m, 'gms')
+        self.capturePerformanceResultTime("Write gms")
+
+        self.writeModelInstance(m, 'nl')
+        self.capturePerformanceResultTime("Write nl")
+
+        self.writeModelInstance(m, 'lp')
+        self.capturePerformanceResultTime("Write lp")
 
 ###
 
 if __name__ == "__main__":
     unittest.main()
-
 

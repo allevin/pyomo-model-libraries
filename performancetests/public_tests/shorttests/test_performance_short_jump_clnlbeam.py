@@ -26,20 +26,20 @@ def teardown_module():
 
 ################################################################################
 
-@unittest.category('performance', 'long')
-class Test_jump_clnlbeam_50000(PerformanceTestCase):
+@unittest.category('performance', 'short')
+class Test_jump_clnlbeam_5000(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('jump_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/jump_models')
         self.setTestModelName('model_clnlbeam')
-        self.setTestSize(50000)
-        self.setTestDataFileName("data-clnlbeam-50000.dat")
+        self.setTestSize(5000)
+        self.setTestDataFileName("data-clnlbeam-5000.dat")
 
     def tearDown(self):
         self.writeTestTimingResults()
 
     @unittest.category('gms', 'nl')
-    def test_jump_clnbeam_50000(self):
+    def test_jump_clnlbeam_5000(self):
 
         m = self.createModelInstance()
         self.capturePerformanceResultTime("Model Declaration")

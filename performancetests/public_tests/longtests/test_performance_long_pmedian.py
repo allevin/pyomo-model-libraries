@@ -30,7 +30,7 @@ def teardown_module():
 class Test_pmedian1_8(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('pmedian_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/pmedian_models')
         self.setTestModelName('model_pmedian1')
         self.setTestSize(8)
         self.setTestDataFileName("data-pmedian.test8.dat")
@@ -62,7 +62,7 @@ class Test_pmedian1_8(PerformanceTestCase):
 class Test_pmedian2_8(PerformanceTestCase):
 
     def setUp(self):
-        self.setTestModelDir('pmedian_models')
+        self.setTestModelDir(self.getTopTestingDir() + '/public_tests/models/pmedian_models')
         self.setTestModelName('model_pmedian2')
         self.setTestSize(8)
         self.setTestDataFileName("data-pmedian.test8.dat")
